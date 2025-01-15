@@ -46,12 +46,24 @@ class Personaje:
             print("ERROR, haz puesto un valor negativo")        
         self.__fuerza = fuerza
         
+class Guerrero(Personaje):
+    #Sobreescribir el constructor
+    def __init__(self, nombre, fuerza, inteligencia, defensa, vida, espada):
+        #Llamar clase padre
+        super().__init__(nombre, fuerza, inteligencia, defensa, vida)
+        self.espada = espada
+        
+Hercules = Guerrero("Hércules", 80, 50, 100, 100, 5)
+Hercules.atributos()
+print(Hercules.espada)
+
+        
     
     
         
 #variable de constructor de la clase
-mi_personaje = Personaje("Trakalosa de monterrey", 8000, 90, 50, 100)
-mi_enemigo = Personaje("La Arrolladora", 60, 90, 40, 100)
+#mi_personaje = Personaje("Trakalosa de monterrey", 8000, 90, 50, 100)
+#mi_enemigo = Personaje("La Arrolladora", 60, 90, 40, 100)
 #print(mi_personaje.dañar(mi_enemigo))
 #print(mi_personaje.esta_vivo())
 #mi_personaje.atributos()
@@ -59,9 +71,9 @@ mi_enemigo = Personaje("La Arrolladora", 60, 90, 40, 100)
 #mi_enemigo.atributos()
 
 #Prueba 4. ¿Acceso a morir?
-mi_personaje.atacar(mi_enemigo)
+#mi_personaje.atacar(mi_enemigo)
 
 #Prueba 7. Getters and setters
-print(mi_personaje.get_fuerza())
-mi_personaje.set_fuerza(-100)
-print(mi_personaje.get_fuerza())
+#print(mi_personaje.get_fuerza())
+#mi_personaje.set_fuerza(-100)
+#print(mi_personaje.get_fuerza())

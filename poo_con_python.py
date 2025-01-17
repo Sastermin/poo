@@ -2,49 +2,49 @@ class Personaje:
     
     def __init__(self, nombre, fuerza, inteligencia, defensa, vida):
         #El signo de "=" es de asignación
-        self.__nombre = nombre
-        self.__fuerza = fuerza
-        self.__inteligencia = inteligencia
-        self.__defensa = defensa
-        self.__vida = vida
+        self.nombre = nombre
+        self.fuerza = fuerza
+        self.inteligencia = inteligencia
+        self.defensa = defensa
+        self.vida = vida
         
     def atributos(self):
-        print(self.__nombre)
-        print("Fuerza: ", self.__fuerza)
-        print("Inteligencia: ", self.__inteligencia)
-        print("Defensa: ", self.__defensa)
-        print("Vida: ", self.__vida)
+        print(self.nombre)
+        print("Fuerza: ", self.fuerza)
+        print("Inteligencia: ", self.inteligencia)
+        print("Defensa: ", self.defensa)
+        print("Vida: ", self.vida)
     
     def subir_nivel(self,fuerza, inteligencia, defensa):
-        self.__fuerza += fuerza
-        self.__inteligencia += inteligencia
-        self.__defensa += defensa
+        self.fuerza += fuerza
+        self.inteligencia += inteligencia
+        self.defensa += defensa
         
     def esta_vivo(self):
-        return self.__vida > 0
+        return self.vida > 0
     
     def morir(self):
-        self.__vida = 0
-        print(self.__nombre, "ha muerto")
+        self.vida = 0
+        print(self.nombre, "ha muerto")
         
     def dañar(self, enemigo):
-        return self.__fuerza - enemigo.__defensa if self.__fuerza >= self.__defensa else 0
+        return self.fuerza - enemigo.defensa if self.fuerza >= self.defensa else 0
     
     def atacar(self, enemigo):
         daño = self.dañar(enemigo)
-        enemigo.__vida = enemigo.__vida - daño
-        print(self.__nombre, "ha realizado", daño, "puntos de daño a", enemigo.__nombre) 
+        enemigo.vida = enemigo.vida - daño
+        print(self.nombre, "ha realizado", daño, "puntos de daño a", enemigo.nombre) 
         if not enemigo.esta_vivo():
             enemigo.morir()
-        print("Vida de ", enemigo.__nombre, "es", enemigo.__vida)
+        print("Vida de ", enemigo.nombre, "es", enemigo.vida)
         
     def get_fuerza(self): 
-        return self.__fuerza
+        return self.fuerza
     
     def set_fuerza(self, fuerza):
         if fuerza < 0: 
             print("ERROR, haz puesto un valor negativo")        
-        self.__fuerza = fuerza
+        self.fuerza = fuerza
         
 class Guerrero(Personaje):
     #Sobreescribir el constructor
@@ -53,9 +53,61 @@ class Guerrero(Personaje):
         super().__init__(nombre, fuerza, inteligencia, defensa, vida)
         self.espada = espada
         
-Hercules = Guerrero("Hércules", 80, 50, 100, 100, 5)
+    #Pedirle al usuario escoger un arma
+    def cambiar_arma(self):
+        opcion = int(input("Elige un arma: (1) Espada de plata, daño 10. (2) Espada de bronce, daño 8\n")) 
+        if opcion == 1:
+            self.espada = 10
+        elif opcion == 2:
+            self.espada = 8
+        else: 
+            print("Valor incorrecto")
+    
+    #Sobreescribir método
+    def atributos(self):
+        super().atributos()
+        print("Espada:",self.espada)
+        
+    #Sobreescribir el cálculo de daño    
+    def dañar(self,enemigo):
+        return self.fuerza * self.espada - enemigo.defensa
+    
+class Mago(Personaje):
+    #Sobreescribir el constructor
+    def __init__(self, nombre, fuerza, inteligencia, defensa, vida, libro):
+        #Llamar clase padre
+        super().__init__(nombre, fuerza, inteligencia, defensa, vida)
+        self.libro = libro
+        
+    #Sobreescribir método
+    def atributos(self):
+        super().atributos()
+        print("Libro:",self.libro)
+        
+    #Sobreescribir el cálculo de daño    
+    def dañar(self,enemigo):
+        return self.inteligencia * self.libro - enemigo.defensa
+
+Trakalosa = Personaje("La Trakalosa de Monterrey", 20, 15, 10, 100)            
+Hercules = Guerrero("Hércules", 20, 15, 10, 100, 5)
+Diosito = Mago("Diosito", 20, 15, 10, 100, 5)
+#Imprimir atributos antes del ataque
+Trakalosa.atributos()
+print("**************")
 Hercules.atributos()
-print(Hercules.espada)
+print("**************")
+Diosito.atributos()
+#Ataques
+Trakalosa.atacar(Hercules)
+Hercules.atacar(Diosito)
+Diosito.atacar(Trakalosa)
+#Imprimir atributos después del atque
+Trakalosa.atributos()
+print("**************")
+Hercules.atributos()
+print("**************")
+Diosito.atributos()
+
 
         
     
